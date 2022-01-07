@@ -20,10 +20,6 @@ mono_crash.*.json
 # Blender versioning
 *.blend[0-9]*
 
-
-# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,linux
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,linux
-
 ### Linux ###
 *~
 
