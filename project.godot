@@ -9,29 +9,24 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "",
-"class": "GitAPI",
-"language": "NativeScript",
-"path": "res://addons/godot-git-plugin/git_api.gdns"
-}, {
 "base": "Node",
 "class": "Planet",
 "language": "GDScript",
 "path": "res://src/Planet/planet.gd"
 } ]
 _global_script_class_icons={
-"GitAPI": "",
 "Planet": "res://assets/earth.svg"
 }
 
 [application]
 
 config/name="Hexadot"
+run/main_scene="res://src/Main/main.tscn"
 config/icon="res://assets/icon.png"
 
 [gdnative]
 
-singletons=[ "res://addons/godot-git-plugin/git_api.gdnlib" ]
+singletons=[  ]
 
 [physics]
 
