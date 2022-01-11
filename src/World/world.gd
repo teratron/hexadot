@@ -1,4 +1,4 @@
-extends Node
+extends Spatial
 # Inherit from 'Character.gd'.
 #extends "res://src/Planet/planet.gd"
 #extends "Planet"
@@ -10,3 +10,5 @@ extends Node
 
 #var Character = load("res://src/Planet/planet.gd")
 #var character_node = Character.new()
+
+

@@ -3,19 +3,9 @@
 [ext_resource path="res://src/Planet/planet.gd" type="Script" id=1]
 [ext_resource path="res://src/World/world.gd" type="Script" id=2]
 
-[node name="World" type="Node"]
+[node name="World" type="Spatial"]
 script = ExtResource( 2 )
 
 [node name="Planet" type="Node" parent="."]
 script = ExtResource( 1 )
 num_hex_equator = 90
-
-[node name="GridMap" type="GridMap" parent="."]
-data = {
-"cells": PoolIntArray(  )
-}
-__meta__ = {
-"_editor_clip_": 0
-}
-
-[node name="Position3D" type="Position3D" parent="."]
