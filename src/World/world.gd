@@ -11,4 +11,5 @@ extends Spatial
 #var Character = load("res://src/Planet/planet.gd")
 #var character_node = Character.new()
 
-
+func _to_string() -> String:
+	return '%s' % []

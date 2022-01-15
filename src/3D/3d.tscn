@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/3D/camera.gd" type="Script" id=1]
 [ext_resource path="res://assets/block.png" type="Texture" id=2]
@@ -26,6 +26,9 @@ material = SubResource( 6 )
 
 [sub_resource type="SpatialMaterial" id=12]
 albedo_texture = ExtResource( 2 )
+
+[sub_resource type="ConcavePolygonShape" id=15]
+data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
 
 [node name="Main" type="Spatial"]
 
@@ -69,6 +72,11 @@ shape = SubResource( 14 )
 [node name="MeshInstance" type="MeshInstance" parent="Boxes/Box"]
 mesh = SubResource( 11 )
 material/0 = SubResource( 12 )
+
+[node name="StaticBody" type="StaticBody" parent="Boxes/Box/MeshInstance"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Boxes/Box/MeshInstance/StaticBody"]
+shape = SubResource( 15 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 15 )
