@@ -25,6 +25,7 @@ func _process(delta):
 	var rot = ROTATE * delta
 	#var spd = SPEED * delta
 	
+	#if !Input.is_action_pressed("ui_left") && !Input.is_action_pressed("ui_right"):
 	if Input.is_action_pressed("ui_left"):
 		#dir.x = -1
 		rotate_y(rot)

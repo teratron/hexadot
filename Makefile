@@ -1,51 +1,6 @@
 
-#################################################
-
-new_contents = "hello:\n\ttouch inside_file
-all:
-	mkdir -p subdir
-	printf $(new_contents) | sed -e 's/^ //' > subdir/makefile
-	cd subdir && $(MAKE)
-
-clean3:
-	rm -rf subdir
-
-#################################################
-
-hey: one two
-	echo $@
-	echo $?
-	echo $^
-	touch hey
-
-one:
-	touch one
-
-two:
-	touch two
-
-#################################################
-
-files := file1 file2
-
-some_file: $(files)
-	echo "Look at this variable: " $(files)
-	touch some_file
-
-file1:
-	touch file1
-
-file2:
-	touch file2
-
-clean2:
-	rm -f file1 file2 some_file hey one two
-
-#################################################
-
-message = Makefile
+message = Add obj model car
 branch = master
-
 add_commit_push: ## add commit push
 	git add .
 	git commit -m "$(message)"
