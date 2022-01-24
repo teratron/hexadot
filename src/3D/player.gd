@@ -7,6 +7,9 @@ const SPEED = 500
 var vel = Vector3()
 
 
+#var ac = ActionControl.new()
+
+
 func _ready():
 	pass
 
@@ -17,7 +20,7 @@ func _process(delta):
 	#rotate_x(0.2)
 	#rotate_y(0.1)
 	#rotate_z(0.05)
-	
+
 	#translation.z -= 0.05
 	#translate(Vector3(0,0,-0.05))
 	
@@ -25,19 +28,35 @@ func _process(delta):
 	var rot = ROTATE * delta
 	#var spd = SPEED * delta
 	
-	#if !Input.is_action_pressed("ui_left") && !Input.is_action_pressed("ui_right"):
-	if Input.is_action_pressed("ui_left"):
-		#dir.x = -1
-		rotate_y(rot)
-	elif Input.is_action_pressed("ui_right"):
-		#dir.x = 1
-		rotate_y(-rot)
+	var isActionLeft  = Input.is_action_pressed("ui_left")
+	var isActionRight = Input.is_action_pressed("ui_right")
+	var isActionUp    = Input.is_action_pressed("ui_up")
+	var isActionDown  = Input.is_action_pressed("ui_down")
+	#print(isActionLeft, " ", isActionRight, " ", isActionUp, " ", isActionDown)
+	#print(Input.is_action_pressed("ui_left"), " ", Input.is_action_pressed("ui_right"), " ", Input.is_action_pressed("ui_up"), " ", Input.is_action_pressed("ui_down"))
 	
-	if Input.is_action_pressed("ui_up"):
+	if isActionLeft && !isActionRight:
+			rotate_y(rot)
+	elif isActionRight && !isActionLeft:
+			rotate_y(-rot)
+	
+	if isActionUp && !isActionDown:
 		dir.z = -1
-		#translate(Vector3(0,0,-spd))
-	elif Input.is_action_pressed("ui_down"):
+	elif isActionDown && !isActionUp:
 		dir.z = 1
+	
+	#if Input.is_action_pressed("ui_left"):
+		#dir.x = -1
+		#rotate_y(rot)
+	#elif Input.is_action_pressed("ui_right"):
+		#dir.x = 1
+		#rotate_y(-rot)
+	
+	#if Input.is_action_pressed("ui_up"):
+		#dir.z = -1
+		#translate(Vector3(0,0,-spd))
+	#elif Input.is_action_pressed("ui_down"):
+		#dir.z = 1
 		#translate(Vector3(0,0,spd))
 	
 	if dir:
