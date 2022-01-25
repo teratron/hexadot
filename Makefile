@@ -1,5 +1,5 @@
 
-message = Add obj model car
+message = Add movement
 branch = master
 add_commit_push: ## add commit push
 	git add .

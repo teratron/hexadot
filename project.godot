@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "MovementCreature",
+"language": "GDScript",
+"path": "res://src/Movement/creature.gd"
+}, {
 "base": "Node",
 "class": "Planet",
 "language": "GDScript",
 "path": "res://src/Planet/planet.gd"
 } ]
 _global_script_class_icons={
+"MovementCreature": "",
 "Planet": "res://assets/earth.svg"
 }
 
