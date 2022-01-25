@@ -1,11 +1,15 @@
-#
-class_name MovementCreature
+class_name ActionCharacter, "res://assets/earth.svg" extends Node
 
 
 export var Rotate = 2
 export var GRAVITY = -10
 export var Speed = 500
 export var vel = Vector3()
+
+
+#class MovementAction:
+var Action = load("action.gd")
+var movementAction = Action.new()
 
 
 var isLeft:  bool
@@ -28,11 +32,20 @@ func _init():
 
 
 func _ready():
-	var im = InputMap.new()
-	im.add_action("move_left")
-	im.add_action("move_right")
-	im.add_action("move_forward")
-	im.add_action("move_back")
+	#var action = Action.new()
+	#for a in 4:
+	
+	InputMap.add_action("move_left")
+	InputMap.add_action("move_right")
+	InputMap.add_action("move_forward")
+	InputMap.add_action("move_back")
+	
+	var iek = InputEventKey.new()
+	iek.scancode = KEY_A
+	InputMap.add_action("ui_a")
+	InputMap.action_add_event("ui_a", iek)
+	
+	
 	#var inputEvent = InputEvent.new()
 	#InputMap.action_add_event("move_left", InputEvent.button_index(KEY_T))
 	pass

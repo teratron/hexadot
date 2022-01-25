@@ -1,7 +1,6 @@
 extends Spatial
 
 
-
 onready var cam_world = $Camera
 onready var cam_player = $InterpolatedCamera
 #onready var cam_player = $"Player/Camera"
@@ -13,11 +12,18 @@ func _input(event):
 		if event.scancode == KEY_T:
 			print("T was pressed")
 
+
 func _init():
 	pass
 
+
 func _ready():
-	var Character = load("res://src/Movement/creature.gd")
+	var iek = InputEventKey.new()
+	iek.scancode = KEY_T
+	InputMap.add_action("move_left")
+	InputMap.action_add_event("move_left", iek)
+	
+	var Character = load("res://src/Action/character.gd")
 	var character_node = Character.new()
 	character_node.print_all()
 	
