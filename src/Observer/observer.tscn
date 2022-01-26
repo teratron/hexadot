@@ -11,10 +11,10 @@ visible = false
 [node name="InterpolatedCamera" type="InterpolatedCamera" parent="."]
 visible = false
 
+[node name="ClippedCamera" type="ClippedCamera" parent="."]
+visible = false
+
 [node name="ARVROrigin" type="ARVROrigin" parent="."]
 visible = false
 
 [node name="ARVRCamera" type="ARVRCamera" parent="ARVROrigin"]
-
-[node name="ClippedCamera" type="ClippedCamera" parent="ARVROrigin"]
-visible = false
