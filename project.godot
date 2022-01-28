@@ -10,17 +10,24 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
+"class": "Icosahedron",
+"language": "GDScript",
+"path": "res://src/Planet/icosahedron.gd"
+}, {
+"base": "Node",
 "class": "Planet",
 "language": "GDScript",
 "path": "res://src/Planet/planet.gd"
 } ]
 _global_script_class_icons={
+"Icosahedron": "res://assets/icosahedron.svg",
 "Planet": "res://assets/earth.svg"
 }
 
 [application]
 
 config/name="Hexadot"
+run/main_scene="res://src/World/world.tscn"
 config/icon="res://assets/icon.png"
 
 [physics]

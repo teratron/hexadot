@@ -1,15 +1,9 @@
 extends Spatial
-# Inherit from 'Character.gd'.
-#extends "res://src/Planet/planet.gd"
-#extends "Planet"
 
-# Cache the enemy class.
-#var Planet = load("res://src/Planet/planet.gd")
 
-# Load character.gd and create a new node instance from it.
+func _ready():
+	pass
 
-#var Character = load("res://src/Planet/planet.gd")
-#var character_node = Character.new()
 
 func _to_string() -> String:
 	return '%s' % []

@@ -1,9 +1,9 @@
 class_name Planet, "res://assets/earth.svg" extends Node
 
 
-export var _radius: float = 100             # радиус планеты
-export var num_hex_equator: int = 360       # количество шестиугольников по экватору
-export var is_vertical_hexagon: bool = true # ориентация шестиугольника, вертикальная или горизонтальная
+export(float) var _radius = 100             # радиус планеты
+export(int) var num_hex_equator = 360       # количество шестиугольников по экватору
+export(bool) var is_vertical_hexagon = true # ориентация шестиугольника, вертикальная или горизонтальная
 
 var circumference: float        # длина экватора планеты (длина окружности)
 var angle_arc: float            # угол между центрами соседних шестиугольников по экватору
