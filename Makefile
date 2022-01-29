@@ -1,4 +1,8 @@
 
+
+set_url: ## git remote set-url origin git@github.com:login/repo.git
+	git remote set-url origin git@github.com:teratron/hexadot.git
+
 message = get params
 branch = master
 add_commit_push: ## add commit push
