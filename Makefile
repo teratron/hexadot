@@ -1,5 +1,5 @@
 
-message = Add movement
+message = get params
 branch = master
 add_commit_push: ## add commit push
 	git add .
