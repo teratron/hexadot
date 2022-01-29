@@ -1,59 +1,83 @@
 class_name Icosahedron, "res://assets/icosahedron.svg" extends Node
 
 
-const vertices = 12
-const faces    = 20
-const edges    = 30
+const VERTICES:  int = 12  # вершины
+const FACES:     int = 20  # грани
+const EDGES:     int = 30  # рёбра
+const LATITUDES: int = 3   # широты
+const PARALLELS: int = 2   # паралели
+const POLES:     int = 2   # полюса
 
-export(float) var radius_outer = 100      # радиус внешней, описывающей сферы
-export(float) var radius_inner = 100      # радиус внутренней, вписанной сферы
+var vertices  = VERTICES
+var faces     = FACES
+var edges     = EDGES
+var latitudes = LATITUDES
+var parallels = PARALLELS
 
-var edge_length: float = 1                # длина ребра
+export(int, 1, 10) var multiplicity = 2  # кратность увеличения фрагментации икосаэдра
+export(float) var radius_outer = 100     # радиус внешней, описывающей сферы
+
+var radius_inner: float = 100         # радиус внутренней, вписанной сферы
+var edge_length:  float = 1           # длина ребра
 
 
 func _init():
-	radius_outer = edge_length / 4 * sqrt(2 * (5 + sqrt(5)))
+	radius_outer = edge_length /  4 * sqrt(2 * (5 + sqrt(5)))
 	radius_inner = edge_length / (4 * sqrt(3)) * (3 + sqrt(5))
+	edge_length  = radius_outer * 4 / sqrt(2 * (5 + sqrt(5)))
 	
-	edge_length = radius_outer * 4 / sqrt(2 * (5 + sqrt(5)))
-	
-	print("Icosahedron Radius Outter:", radius_outer)
-	print("Icosahedron Radius Inner:",  radius_inner)
-	print("Icosahedron Edge Length:",  edge_length)
+	print("Icosahedron")
+	print("Radius Outter:", radius_outer)
+	print("Radius Inner:",  radius_inner)
+	print("Edge Length:",   edge_length)
 	pass
 
 
 func _ready():
-	var m = add_mesh_instance(self, "Center")
-	add_property_to_mesh_instance(m)
-	m.Vector3(0,2,0)
-	pass
+	update_all_params(multiplicity)
 
 
-#func _process(delta):
-#	pass
+func update_all_params(multiple: int):
+	vertices = get_num_vertices(multiple)
+	faces    = get_num_faces(multiple)
+	edges    = get_num_edges(multiple)
+
+#		latitudes = LATITUDES
+#		parallels = PARALLELS
+	return
 
 
-func add_mesh_instance(node, name: String = "MeshInstance") -> MeshInstance:
-	var instance = MeshInstance.new()
-	instance.name = name
-	node.add_child(instance, true)
-	return instance
+func get_num_vertices(multiple: int) -> int:
+	var vertex = VERTICES
+	var delta = 10
+	if multiple > 1:
+		for _i in range(2, multiple + 1):
+			delta *= 4
+			#print(i, " ", delta + 2, " ", FACES * delta / 20 + 2)
+		vertex = delta + 2
+	print("number of vertices %d for multiplicity x%d" % [vertex, multiple])
+	return vertex
 
 
-func add_property_to_mesh_instance(instance):
-	var sm = SphereMesh.new()
-	sm.radius = 0.1
-	sm.height = 0.2
-	sm.radial_segments = 8
-	sm.rings = 4
-	
-	var material = SpatialMaterial.new()
-	material.flags_unshaded = true
-	#sm.albedo_texture = preload("editor_gizmo_texture.png")
-	material.albedo_color = Color(1, 0, 0, 1)
-	sm.material = material
-	
-	instance.mesh = sm
+func get_num_faces(multiple: int) -> int:
+	var face = FACES
+	var delta = 1
+	if multiple > 1:
+		for _i in range(2, multiple + 1):
+			delta *= 4
+			#print(i, " ", FACES * delta)
+		face = FACES * delta
+	print("number of faces %d for multiplicity x%d" % [face, multiple])
+	return face
 
 
+func get_num_edges(multiple: int) -> int:
+	var edge = EDGES
+	var delta = 30
+	if multiple > 1:
+		for i in range(2, multiple + 1):
+			delta *= 4
+			print(i, " ", delta, " ", delta + EDGES)
+		edge = delta + 2
+	print("number of edges %d for multiplicity x%d" % [edge, multiple])
+	return edge
