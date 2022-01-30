@@ -11,7 +11,7 @@ __meta__ = {
 
 [node name="Icosahedron" type="Node" parent="."]
 script = ExtResource( 3 )
-subdivision = 2
+subdivision = 4
 radius = 1.0
 
 [node name="Camera" type="Camera" parent="."]
