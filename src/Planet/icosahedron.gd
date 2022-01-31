@@ -1,20 +1,24 @@
 class_name Icosahedron, "res://assets/icosahedron.svg" extends Node
 
 
+const PENTAGON       = 5
 const PENTAGON_ANGLE = 72
 
 export(int, 1, 10) var subdivision = 1  # кратность увеличения фрагментации икосаэдра
 export(float) var radius = 100          # радиус внешней, описывающей сферы
 
-var vertices:       int = 12       # вершины
-var edges:          int = 30       # рёбра
-var faces:          int = 20       # грани
-var latitudes:      int = 3        # широты
-var parallel_angle: float = 60     # 
+var vertices:       int   = 12     # вершины
+var edges:          int   = 30     # рёбра
+var faces:          int   = 20     # грани
+var latitudes:      int   = 3      # широты
+var parallel_angle: float = 60     # угол широты или угол триугольника
 var radius_inner:   float          # радиус внутренней, вписанной сферы
 var edge_length:    float          # длина ребра
-var icosahedron:    Array
-var coordinates:    Array
+
+#var icosahedron: Array
+var coordinates: Array
+var surface:     Array
+#var parallels = [1, 5, 5, 1]
 
 
 class Figure:
@@ -52,20 +56,25 @@ class Figure:
 
 
 class Face:
-	var vertices:    int = 3   # вершины
+	var id: int
+	var corners: Array
+	var faces_near: Array
+	
 	var edges:       int = 3   # рёбра
 	var faces:       int = 4   # грани
 	var edge_length: float     # длина ребра
-	var coordinates: Array
+	#var coordinates: Array
 
 
 class Vertex:
 	var subdivision: int
+	var face_id:   Array
+	
 	var latitude:  float
 	var longitude: float
-	var x: float
-	var y: float
-	var z: float
+	var x:         float
+	var y:         float
+	var z:         float
 	
 	func _init(lat = 0, lon = 0):
 		latitude  = lat
@@ -73,16 +82,65 @@ class Vertex:
 
 
 func _init():
-	var n = vertices - 1
-	coordinates.resize(vertices)
-	coordinates[0] = Vertex.new(0, 0)   # северный полюс
-	coordinates[n] = Vertex.new(180, 0) # южный полюс
-	print(subdivision)
-	for i in range(1, n):
-		coordinates[i] = Vertex.new()
-		coordinates[i].subdivision = subdivision
-		coordinates[i].latitude  = 0
-		coordinates[i].longitude = 0
+	parallel_angle = 180 / float(latitudes)
+	edge_length    = radius * 4 / sqrt(2 * (5 + sqrt(5)))
+	radius_inner   = edge_length / (4 * sqrt(3)) * (3 + sqrt(5))
+	
+	
+	
+	var n = faces - 1
+	surface.resize(faces)
+	for i in faces:
+		surface[i] = Face.new()
+		
+		var u: int # индекс следующей плоскости
+		var v: int # индекс предыдующей плоскости
+		var w: int # индекс плоскости граничащей с основанием
+		
+		if i == 0:
+			v = PENTAGON - 1
+		else:
+			v = i - 1
+		
+		if i == n:
+			u = i - PENTAGON + 1
+		else:
+			u = i + 1
+		
+		w = i + PENTAGON
+		#if i >= NORTH_HEMISPHERE
+		
+		prints(i, u, v, w)
+		surface[i].faces_near = [u, v, w]
+	
+	#print(surface)
+	
+#	var i = 0
+#	coordinates.resize(vertices)
+#	for j in [1, 5, 5, 1]:
+#		for k in j:
+#			prints(i, j, k)
+#			coordinates[i] = Vertex.new()
+#			coordinates[i].subdivision = subdivision
+#			coordinates[i].face_id = []
+#			i += 1
+	
+#	coordinates.resize(faces)
+#	for i in range(0, faces):
+#		coordinates[i] = Vertex.new()
+#		print(i)
+	
+	
+#	var n = vertices - 1
+#	coordinates.resize(vertices)
+#	coordinates[0] = Vertex.new(0, 0)   # северный полюс
+#	coordinates[n] = Vertex.new(180, 0) # южный полюс
+#	print(subdivision)
+#	for i in range(1, n):
+#		coordinates[i] = Vertex.new()
+#		coordinates[i].subdivision = subdivision
+#		coordinates[i].latitude  = 0
+#		coordinates[i].longitude = 0
 	pass
 
 
