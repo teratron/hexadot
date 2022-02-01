@@ -1,4 +1,4 @@
-class_name Planet, "res://assets/earth.svg" extends Node
+class_name Planet, "res://assets/tool/earth.svg" extends Node
 
 
 enum POLE {NORTH, SOUTH} # полюса

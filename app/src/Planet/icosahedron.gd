@@ -1,4 +1,4 @@
-class_name Icosahedron, "res://assets/icosahedron.svg" extends Node
+class_name Icosahedron, "res://assets/tool/icosahedron.svg" extends Node
 
 
 const PENTAGON       = 5
