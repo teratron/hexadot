@@ -1,7 +1,6 @@
 class_name Icosahedron, "res://assets/tool/icosahedron.svg" extends Node
 
 
-const PENTAGON       = 5
 const PENTAGON_ANGLE = 72
 
 export(int, 1, 10) var subdivision = 1  # кратность увеличения фрагментации икосаэдра
@@ -51,61 +50,67 @@ class Figure:
 		
 		n = vertices - 1
 		coordinates.resize(vertices)
-		coordinates[0] = Vertex.new(0, 0)   # северный полюс
-		coordinates[n] = Vertex.new(180, 0) # южный полюс
+		#coordinates[0] = Vertex.new(0, 0)   # северный полюс
+		#coordinates[n] = Vertex.new(180, 0) # южный полюс
 
 
 class Face:
 	var subdivision:   int
 	var id:            int
-	var faces_near_id: Array
-	var vertices_id:   Array
+	var faces_near_id: Array = [0, 0, 0]
+	var vertices_id:   Array = [0, 0, 0]
 
 
 class Vertex:
 	var subdivision: int
 	var id:          int
-	var faces_id:    Array
+	var face_id:     Array = [0, 0, 0, 0, 0]
 	
-	var latitude:  float
-	var longitude: float
-	var x:         float
-	var y:         float
-	var z:         float
-	
-	func _init(lat = 0, lon = 0):
-		latitude  = lat
-		longitude = lon
+	var latitude:    float
+	var longitude:   float
+	var x:           float
+	var y:           float
+	var z:           float
 
-#0  0 9
-#1  4 1  -3
-#2  8 3  -5
-#3 12 5  -7
-#4 16 7  -9
 
 func _init():
 	parallel_angle = 180 / float(latitudes)
 	edge_length    = radius * 4 / sqrt(2 * (5 + sqrt(5)))
 	radius_inner   = edge_length / (4 * sqrt(3)) * (3 + sqrt(5))
 	
-	surface.resize(faces)
-#	for i in faces:
-#		surface[i] = Face.new()
-#		surface[i].subdivision = subdivision
-#		surface[i].id = i
-#		#surface[i].faces_near_id = set_faces_near_id(i)
-#		surface[i].faces_near_id = set_alt_faces_near_id()
-#		surface[i].vertices_id = set_vertices_id(i)
-#		prints(i, surface[i].faces_near_id)
+	coordinates.resize(vertices)
+	for i in vertices:
+		coordinates[i] = Vertex.new()
+		coordinates[i].subdivision = subdivision
+		coordinates[i].id = i
+		
+		for j in 5:
+			if i == 0:
+				coordinates[i].face_id[j] = j * 4
+			elif i == 11:
+				coordinates[i].face_id[j] = j * 4 + 3
+			elif i > 0 && i < 11:
+				coordinates[i].face_id[j] = j * 4 + 3
 	
+		prints(i, coordinates[i].face_id)
+	
+	surface.resize(faces)
+	var i = 0
 	var a: int
 	var b: int
 	var c: int
-	var x: int
-	var y: int
-	var z: int
-	var i = 0
+	var d: int
+	
 	for j in 5:
+		a = 2 * j
+		b = a - 1
+		c = a + 1
+		d = a + 2
+		
+		if j == 0:
+			if a == 0: a  = 10
+			if b  < 0: b += 10
+		
 		for k in 4:
 			surface[i] = Face.new()
 			surface[i].subdivision = subdivision
@@ -113,43 +118,24 @@ func _init():
 			
 			match k:
 				0:
-					a = i + 1
-					if j == 4: b = i - 16; else: b = i + 4
-					if j == 0: c = i + 16; else: c = i - 4
-					
-					x = 0
-					if j == 0: y = j + 9; else: y = 2 * j - 1
+					surface[i].faces_near_id = [i - 4, i + 1, i + 4]
+					surface[i].vertices_id   = [b, 0, c]
 				1:
-					a = i - 1
-					if j == 0: b = i + 17; else: b = i - 3
-					c = i + 1
+					surface[i].faces_near_id = [i - 3, i - 1, i + 1]
+					surface[i].vertices_id   = [b, a, c]
 				2:
-					a = i + 1
-					if j == 4: b = i - 17; else: b = i + 3
-					c = i - 1
+					surface[i].faces_near_id = [i - 1, i + 1, i + 3]
+					surface[i].vertices_id   = [a, c, d]
 				3:
-					a = i - 1
-					if j == 0: b = i + 16; else: b = i - 4
-					if j == 4: c = i - 16; else: c = i + 4
-					
-					z = 0
+					surface[i].faces_near_id = [i - 4, i - 1, i + 4]
+					surface[i].vertices_id   = [a, 11, d]
 			
-			surface[i].faces_near_id = [a, b, c]
-			surface[i].vertices_id = [x, y, z]
+			if surface[i].faces_near_id[0] <  0: surface[i].faces_near_id[0] += 20
+			if surface[i].faces_near_id[2] > 19: surface[i].faces_near_id[2] -= 20
 			
-			prints(i, surface[i].faces_near_id)
+			#prints(i, surface[i].faces_near_id)
+			#prints(i, surface[i].vertices_id)
 			i += 1
-	
-#	var i = 0
-#	coordinates.resize(vertices)
-#	for j in [1, 5, 5, 1]:
-#		for k in j:
-#			prints(i, j, k)
-#			coordinates[i] = Vertex.new()
-#			coordinates[i].subdivision = subdivision
-#			coordinates[i].faces_id = []
-#			i += 1
-	
 	
 #	var n = vertices - 1
 #	coordinates.resize(vertices)
@@ -207,115 +193,6 @@ func _ready():
 #	print("edge length: ", edge_length)
 #	print("latitude angle: ", parallel_angle)
 	pass
-
-
-#func set_faces_near_id(index: int) -> Array:
-#	var u: int # индекс следующей плоскости
-#	var v: int # индекс предыдующей плоскости
-#	var w: int # индекс плоскости граничащей с основанием
-#
-#	# северный и южный полюс
-#	if index < 5 || index > 14:
-#		if index == 4 || index == 19:
-#			u = index - 4
-#		else:
-#			u = index + 1
-#		if index == 0 || index == 15:
-#			v = index + 4
-#		else:
-#			v = index - 1
-#		if index < 5:
-#			w = index + 5
-#		if index > 14:
-#			w = index - 5
-#
-#	# экватор
-#	else:
-#		if index > 4 && index < 10:
-#			u = index + 5
-#			if index == 5:
-#				v = index + 9
-#			else:
-#				v = index + 4
-#			w = index - 5
-#		if index > 9 && index < 15:
-#			if index == 14:
-#				u = index - 9
-#			else:
-#				u = index - 4
-#			v = index - 5
-#			w = index + 5
-#
-#	return [u, v, w]
-
-
-#func set_alt_faces_near_id() -> Array:
-#	var a: int
-#	var b: int
-#	var c: int
-#	var i = 0
-#
-#	for j in 5:
-#		for k in 4:
-#			match k:
-#				0:
-#					a = i + 1
-#					if j == 4: b = i - 16; else: b = i + 4
-#					if j == 0: c = i + 16; else: c = i - 4
-#				1:
-#					a = i - 1
-#					if j == 0: b = i + 17; else: b = i - 3
-#					c = i + 1
-#				2:
-#					a = i + 1
-#					if j == 4: b = i - 17; else: b = i + 3
-#					c = i - 1
-#				3:
-#					a = i - 1
-#					if j == 0: b = i + 16; else: b = i - 4
-#					if j == 4: c = i - 16; else: c = i + 4
-#			i += 1
-#
-#	return [a, b, c]
-
-#func set_vertices_id(index: int) -> Array:
-#	var u: int # индекс следующей плоскости
-#	var v: int # индекс предыдующей плоскости
-#	var w: int # индекс плоскости граничащей с основанием
-#
-#	if index < 5:
-#		u = 0
-#		if index == 0:
-#			v = 5
-#		else:
-#			v = index
-#		w = index + 1
-#		if index > 4 && index < 10:
-#			u = index + 5
-#			if index == 5:
-#				v = index + 9
-#			else:
-#				v = index + 4
-#			w = index - 5
-#		if index > 9 && index < 15:
-#			if index == 14:
-#				u = index - 9
-#			else:
-#				u = index - 4
-#			v = index - 5
-#			w = index + 5
-#
-#	return [u, v, w]
-
-#0 0 5 1
-#1 0 1 2
-#2 0 2 3
-#3 0 3 4
-#4 0 4 5
-
-
-
-
 
 
 #func get_delta(_subdivision: int) -> int:
