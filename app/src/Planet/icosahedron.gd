@@ -136,17 +136,6 @@ func _init():
 			#prints(i, surface[i].faces_near_id)
 			#prints(i, surface[i].vertices_id)
 			i += 1
-	
-#	var n = vertices - 1
-#	coordinates.resize(vertices)
-#	coordinates[0] = Vertex.new(0, 0)   # северный полюс
-#	coordinates[n] = Vertex.new(180, 0) # южный полюс
-#	print(subdivision)
-#	for i in range(1, n):
-#		coordinates[i] = Vertex.new()
-#		coordinates[i].subdivision = subdivision
-#		coordinates[i].latitude  = 0
-#		coordinates[i].longitude = 0
 	pass
 
 
