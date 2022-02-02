@@ -64,7 +64,8 @@ class Face:
 class Vertex:
 	var subdivision: int
 	var id:          int
-	var face_id:     Array = [0, 0, 0, 0, 0]
+	var vertex_near_id: Array = [0, 0, 0, 0, 0]
+	var faces_id:     Array = [0, 0, 0, 0, 0]
 	
 	var latitude:    float
 	var longitude:   float
@@ -86,13 +87,50 @@ func _init():
 		
 		for j in 5:
 			if i == 0:
-				coordinates[i].face_id[j] = j * 4
+				coordinates[0].vertex_near_id[j] = 2 * j + 1
+				coordinates[0].faces_id[j] = j * 4
 			elif i == 11:
-				coordinates[i].face_id[j] = j * 4 + 3
-			elif i > 0 && i < 11:
-				coordinates[i].face_id[j] = j * 4 + 3
+				coordinates[11].vertex_near_id[j] = 2 * j + 2
+				coordinates[11].faces_id[j] = j * 4 + 3
+			else:
+				if i % 2 > 0: # нечётное
+					if j == 0:
+						coordinates[i].vertex_near_id[0] = 0
+					elif j < i:
+						coordinates[i].vertex_near_id[j] = i + j - 3
+					else:
+						coordinates[i].vertex_near_id[j] = i + j - 2
+				else: # чётное
+					if j == 4:
+						coordinates[i].vertex_near_id[4] = 11
+					elif j < i:
+						coordinates[i].vertex_near_id[j] = i + j - 2
+					else:
+						coordinates[i].vertex_near_id[j] = i + j - 1
+
+
+#					6 0 4
+#					6 1 5
+
+#					6 2 7
+#					6 3 8
+
+#					3 3 4
+#					3 4 5
+#
+#					5 3 6
+#					5 4 7
+					
+#					3 1 1
+#					3 2 2
+#
+#					5 1 3
+#					5 2 4
+					
+				
+				#coordinates[i].faces_id[j] = j * 4 + 3
 	
-		prints(i, coordinates[i].face_id)
+		#prints(i, coordinates[i].faces_id)
 	
 	surface.resize(faces)
 	var i = 0
