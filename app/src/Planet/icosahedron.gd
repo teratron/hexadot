@@ -50,22 +50,20 @@ class Figure:
 		
 		n = vertices - 1
 		coordinates.resize(vertices)
-		#coordinates[0] = Vertex.new(0, 0)   # северный полюс
-		#coordinates[n] = Vertex.new(180, 0) # южный полюс
 
 
 class Face:
-	var subdivision:   int
-	var id:            int
-	var faces_near_id: Array = [0, 0, 0]
-	var vertices_id:   Array = [0, 0, 0]
+	var subdivision: int
+	var id:          int
+	var faces_id:    Array = [0, 0, 0]
+	var vertices_id: Array = [0, 0, 0]
 
 
 class Vertex:
 	var subdivision: int
 	var id:          int
-	var vertex_near_id: Array = [0, 0, 0, 0, 0]
-	var faces_id:     Array = [0, 0, 0, 0, 0]
+	var vertices_id: Array = [0, 0, 0, 0, 0]
+	var faces_id:    Array = [0, 0, 0, 0, 0]
 	
 	var latitude:    float
 	var longitude:   float
@@ -79,101 +77,8 @@ func _init():
 	edge_length    = radius * 4 / sqrt(2 * (5 + sqrt(5)))
 	radius_inner   = edge_length / (4 * sqrt(3)) * (3 + sqrt(5))
 	
-	coordinates.resize(vertices)
-	for i in vertices:
-		coordinates[i] = Vertex.new()
-		coordinates[i].subdivision = subdivision
-		coordinates[i].id = i
-		
-		for j in 5:
-			if i == 0:
-				coordinates[0].vertex_near_id[j] = 2 * j + 1
-				coordinates[0].faces_id[j] = j * 4
-			elif i == 11:
-				coordinates[11].vertex_near_id[j] = 2 * j + 2
-				coordinates[11].faces_id[j] = j * 4 + 3
-			else:
-				if i % 2 > 0: # нечётное
-					if j == 0:
-						coordinates[i].vertex_near_id[0] = 0
-					elif j < i:
-						coordinates[i].vertex_near_id[j] = i + j - 3
-					else:
-						coordinates[i].vertex_near_id[j] = i + j - 2
-				else: # чётное
-					if j == 4:
-						coordinates[i].vertex_near_id[4] = 11
-					elif j < i:
-						coordinates[i].vertex_near_id[j] = i + j - 2
-					else:
-						coordinates[i].vertex_near_id[j] = i + j - 1
-
-
-#					6 0 4
-#					6 1 5
-
-#					6 2 7
-#					6 3 8
-
-#					3 3 4
-#					3 4 5
-#
-#					5 3 6
-#					5 4 7
-					
-#					3 1 1
-#					3 2 2
-#
-#					5 1 3
-#					5 2 4
-					
-				
-				#coordinates[i].faces_id[j] = j * 4 + 3
-	
-		prints(i, coordinates[i].vertex_near_id)
-	
-	surface.resize(faces)
-	var i = 0
-	var a: int
-	var b: int
-	var c: int
-	var d: int
-	
-	for j in 5:
-		a = 2 * j
-		b = a - 1
-		c = a + 1
-		d = a + 2
-		
-		if j == 0:
-			if a == 0: a  = 10
-			if b  < 0: b += 10
-		
-		for k in 4:
-			surface[i] = Face.new()
-			surface[i].subdivision = subdivision
-			surface[i].id = i
-			
-			match k:
-				0:
-					surface[i].faces_near_id = [i - 4, i + 1, i + 4]
-					surface[i].vertices_id   = [b, 0, c]
-				1:
-					surface[i].faces_near_id = [i - 3, i - 1, i + 1]
-					surface[i].vertices_id   = [b, a, c]
-				2:
-					surface[i].faces_near_id = [i - 1, i + 1, i + 3]
-					surface[i].vertices_id   = [a, c, d]
-				3:
-					surface[i].faces_near_id = [i - 4, i - 1, i + 4]
-					surface[i].vertices_id   = [a, 11, d]
-			
-			if surface[i].faces_near_id[0] <  0: surface[i].faces_near_id[0] += 20
-			if surface[i].faces_near_id[2] > 19: surface[i].faces_near_id[2] -= 20
-			
-			#prints(i, surface[i].faces_near_id)
-			#prints(i, surface[i].vertices_id)
-			i += 1
+	init_vertices()
+	init_surface()
 	pass
 
 
@@ -220,6 +125,88 @@ func _ready():
 #	print("edge length: ", edge_length)
 #	print("latitude angle: ", parallel_angle)
 	pass
+
+
+func init_vertices() -> void:
+	coordinates.resize(vertices)
+	
+	for i in vertices:
+		coordinates[i] = Vertex.new()
+		coordinates[i].subdivision = subdivision
+		coordinates[i].id = i
+		
+		for j in 5:
+			if i == 0:
+				coordinates[0].vertices_id[j] = 2 * j + 1
+				coordinates[0].faces_id[j]    = j * 4
+			elif i == 11:
+				coordinates[11].vertices_id[j] = 2 * j + 2
+				coordinates[11].faces_id[j]    = j * 4 + 3
+			else:
+				if i%2 > 0: # нечётное
+					if j == 0:
+						coordinates[i].vertices_id[0] = 0
+					elif j < i:
+						coordinates[i].vertices_id[j] = i + j - 3
+					else:
+						coordinates[i].vertices_id[j] = i + j - 2
+				else: # чётное
+					if j == 4:
+						coordinates[i].vertices_id[4] = 11
+					elif j < i:
+						coordinates[i].vertices_id[j] = i + j - 2
+					else:
+						coordinates[i].vertices_id[j] = i + j - 1
+				
+				#coordinates[i].faces_id[j] = j * 4 + 3
+		prints(i, coordinates[i].vertices_id)
+	return
+
+
+func init_surface() -> void:
+	surface.resize(faces)
+	var i = 0
+	var a: int
+	var b: int
+	var c: int
+	var d: int
+	
+	for j in 5:
+		a = 2 * j
+		b = a - 1
+		c = a + 1
+		d = a + 2
+		
+		if j == 0:
+			if a == 0: a  = 10
+			if b  < 0: b += 10
+		
+		for k in 4:
+			surface[i] = Face.new()
+			surface[i].subdivision = subdivision
+			surface[i].id = i
+			
+			match k:
+				0:
+					surface[i].faces_id    = [i-4, i+1, i+4]
+					surface[i].vertices_id = [0, b, c]
+				1:
+					surface[i].faces_id    = [i-3, i-1, i+1]
+					surface[i].vertices_id = [b, a, c]
+				2:
+					surface[i].faces_id    = [i-1, i+1, i+3]
+					surface[i].vertices_id = [a, c, d]
+				3:
+					surface[i].faces_id    = [i-4, i-1, i+4]
+					surface[i].vertices_id = [a, d, 11]
+			
+			if surface[i].faces_id[0] <  0: surface[i].faces_id[0] += 20
+			if surface[i].faces_id[2] > 19: surface[i].faces_id[2] -= 20
+			
+			#prints(i, surface[i].faces_id)
+			#prints(i, surface[i].vertices_id)
+			i += 1
+	return
 
 
 #func get_delta(_subdivision: int) -> int:
