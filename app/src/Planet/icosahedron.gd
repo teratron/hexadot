@@ -130,7 +130,7 @@ func _init():
 				
 				#coordinates[i].faces_id[j] = j * 4 + 3
 	
-		#prints(i, coordinates[i].faces_id)
+		prints(i, coordinates[i].vertex_near_id)
 	
 	surface.resize(faces)
 	var i = 0
