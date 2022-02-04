@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="900"
    height="900"
    viewBox="0 0 238.12501 238.12501"
    version="1.1"
    id="svg5"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20, custom)"
-   sodipodi:docname="icosahedron.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="icosahedron.svg">
+  <metadata
+     id="metadata489">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
   <sodipodi:namedview
      id="namedview7"
      pagecolor="#ffffff"
@@ -26,18 +38,19 @@
      showgrid="false"
      units="px"
      width="900px"
-     inkscape:zoom="0.8664086"
-     inkscape:cx="754.26306"
-     inkscape:cy="438.01504"
-     inkscape:window-width="1920"
-     inkscape:window-height="999"
-     inkscape:window-x="0"
+     inkscape:zoom="0.71777778"
+     inkscape:cx="510.03981"
+     inkscape:cy="521.37699"
+     inkscape:window-width="810"
+     inkscape:window-height="1008"
+     inkscape:window-x="1123"
      inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:window-maximized="0"
      inkscape:current-layer="layer4"
      inkscape:snap-object-midpoints="true"
      borderlayer="false"
-     inkscape:showpageshadow="true" />
+     inkscape:showpageshadow="true"
+     inkscape:document-rotation="0" />
   <defs
      id="defs2" />
   <g
@@ -335,12 +348,12 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="v3"
-     style="display:none">
+     style="display:none;mix-blend-mode:normal">
     <g
        inkscape:groupmode="layer"
        id="layer5"
        inkscape:label="array"
-       style="display:none">
+       style="display:inline">
       <text
          xml:space="preserve"
          style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
@@ -519,25 +532,25 @@
     <text
        xml:space="preserve"
        style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="102.20329"
+       x="103.05157"
        y="234.44299"
        id="text179"><tspan
          sodipodi:role="line"
          style="stroke-width:0.264583"
-         x="102.20329"
+         x="103.05157"
          y="234.44299"
          id="tspan177">11</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
        x="102.70844"
-       y="184.47295"
+       y="182.71573"
        id="text183"><tspan
          sodipodi:role="line"
          id="tspan181"
          style="stroke-width:0.264583"
          x="102.70844"
-         y="184.47295">10</tspan></text>
+         y="182.71573">10</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
@@ -553,35 +566,35 @@
        xml:space="preserve"
        style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
        x="15.069614"
-       y="183.92693"
+       y="182.71986"
        id="text191"><tspan
          sodipodi:role="line"
          id="tspan189"
          style="stroke-width:0.264583"
          x="15.069614"
-         y="183.92693">2</tspan></text>
+         y="182.71986">2</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="14.424274"
+       x="15.156431"
        y="60.495789"
        id="text195"><tspan
          sodipodi:role="line"
          id="tspan193"
          style="stroke-width:0.264583"
-         x="14.424274"
+         x="15.156431"
          y="60.495789">3</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;fill:#666666;stroke-width:0.264583"
        x="67.144424"
-       y="156.48969"
+       y="155.9767"
        id="text199"><tspan
          sodipodi:role="line"
          id="tspan197"
          style="fill:#666666;stroke-width:0.264583"
          x="67.144424"
-         y="156.48969">4</tspan></text>
+         y="155.9767">4</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;fill:#666666;stroke-width:0.264583"
@@ -596,36 +609,36 @@
     <text
        xml:space="preserve"
        style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="217.53951"
-       y="60.209641"
+       x="217.1373"
+       y="60.623947"
        id="text207"><tspan
          sodipodi:role="line"
          id="tspan205"
          style="stroke-width:0.264583"
-         x="217.53951"
-         y="60.209641">7</tspan></text>
+         x="217.1373"
+         y="60.623947">7</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
        x="217.26959"
-       y="182.20311"
+       y="182.73227"
        id="text211"><tspan
          sodipodi:role="line"
          id="tspan209"
          style="stroke-width:0.264583"
          x="217.26959"
-         y="182.20311">8</tspan></text>
+         y="182.73227">8</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
        x="165.9281"
-       y="82.161049"
+       y="82.73484"
        id="text215"><tspan
          sodipodi:role="line"
          id="tspan213"
          style="stroke-width:0.264583"
          x="165.9281"
-         y="82.161049">9</tspan></text>
+         y="82.73484">9</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;fill:#666666;stroke-width:0.264583"
@@ -640,12 +653,12 @@
     <text
        xml:space="preserve"
        style="font-size:8.46667px;line-height:1.25;font-family:sans-serif;stroke-width:0.264583"
-       x="105.60474"
+       x="108.09106"
        y="10.015249"
        id="text223"><tspan
          sodipodi:role="line"
          style="stroke-width:0.264583"
-         x="105.60474"
+         x="108.09106"
          y="10.015249"
          id="tspan403">0</tspan></text>
   </g>

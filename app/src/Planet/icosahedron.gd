@@ -143,23 +143,24 @@ func init_vertices() -> void:
 				coordinates[11].vertices_id[j] = 2 * j + 2
 				coordinates[11].faces_id[j]    = j * 4 + 3
 			else:
-				if i%2 > 0: # нечётное
-					if j == 0:
+				if j == 0:
+					if i%2 > 0: # нечётное
 						coordinates[i].vertices_id[0] = 0
-					elif j < i:
-						coordinates[i].vertices_id[j] = i + j - 3
+					else: # чётное
+						coordinates[i].vertices_id[0] = 11
+				else:
+					var n = i + j - 3
+					#prints(i, n)
+					if i != n:
+						if j < 3:
+							coordinates[i].vertices_id[j] = i + j - 3
+						else:
+							coordinates[i].vertices_id[j] = i + j - 2
 					else:
 						coordinates[i].vertices_id[j] = i + j - 2
-				else: # чётное
-					if j == 4:
-						coordinates[i].vertices_id[4] = 11
-					elif j < i:
-						coordinates[i].vertices_id[j] = i + j - 2
-					else:
-						coordinates[i].vertices_id[j] = i + j - 1
 				
 				#coordinates[i].faces_id[j] = j * 4 + 3
-		prints(i, coordinates[i].vertices_id)
+		#prints(i, coordinates[i].vertices_id)
 	return
 
 
