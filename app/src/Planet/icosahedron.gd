@@ -3,8 +3,8 @@ class_name Icosahedron, "res://assets/tool/icosahedron.svg" extends Node
 
 const PENTAGON_ANGLE = 72
 
-export(int, 1, 10) var subdivision = 1  # кратность увеличения фрагментации икосаэдра
-export(float) var radius = 100          # радиус внешней, описывающей сферы
+export(int, 1, 10) var subdivision = 1 # кратность увеличения фрагментации икосаэдра
+export(float) var radius = 1           # радиус внешней, описывающей сферы
 
 var vertices:       int   = 12     # вершины
 var edges:          int   = 30     # рёбра
@@ -71,6 +71,37 @@ class Vertex:
 	var y:           float
 	var z:           float
 
+const icosahedron = {
+	vertex_vertices = [
+		[ 1,  2,  3,  4,  5],
+		[ 0,  5,  6,  7,  2],
+		[ 0,  1,  7,  8,  3],
+		[ 0,  2,  8,  9,  4],
+		[ 0,  3,  9, 10,  5],
+		[ 0,  4, 10,  6,  1],
+		[11, 10,  5,  1,  7],
+		[11,  6,  1,  2,  8],
+		[11,  7,  2,  3,  9],
+		[11,  8,  3,  4, 10],
+		[11,  9,  4,  5,  6],
+		[ 6,  7,  8,  9, 10]
+	],
+	vertex_faces = [
+		[1, 2, 3, 4, 5],
+		[0, 5, 6, 7, 2],
+		[0, 1, 7, 8, 3],
+		[0, 2, 8, 9, 4],
+		[0, 3, 9, 10, 5],
+		[0, 4, 10, 6, 1],
+		[11, 10, 5, 1, 7],
+		[11, 6, 1, 2, 8],
+		[11, 7, 2, 3, 9],
+		[11, 8, 3, 4, 10],
+		[11, 9, 4, 5, 6],
+		[6, 7, 8, 9, 10]
+	]
+}
+
 
 func _init():
 	parallel_angle = 180 / float(latitudes)
@@ -135,6 +166,76 @@ func init_vertices() -> void:
 		coordinates[i].subdivision = subdivision
 		coordinates[i].id = i
 		
+		coordinates[i].vertices_id = icosahedron.vertex_vertices[i]
+		
+		if i == 0:
+			coordinates[i].latitude  = 0
+			coordinates[i].longitude = 0
+		elif i == 11:
+			coordinates[i].latitude  = 180
+			coordinates[i].longitude = 0
+		else:
+			coordinates[i].latitude  = parallel_angle
+			coordinates[i].longitude = PENTAGON_ANGLE * (i - 1)
+			if i > 5:
+				coordinates[i].latitude  *= 2
+				coordinates[i].longitude -= PENTAGON_ANGLE * .5
+			
+			if coordinates[i].longitude > 360:
+				coordinates[i].longitude -= 360
+		#prints(i, coordinates[i].vertices_id)
+		prints(i, coordinates[i].latitude, coordinates[i].longitude)
+		
+	coordinates[1].x = radius * sin(deg2rad(coordinates[1].latitude))
+	coordinates[1].y = radius * sin(deg2rad(90 - coordinates[1].latitude))
+	coordinates[1].z = 0
+		
+
+
+	prints(1, coordinates[1].x, coordinates[1].y, coordinates[1].z)
+		#[ 0, -1,  5,  6, 1]
+		#[11, -1, -6, -5, 1]
+#		for j in 5:
+#			if i == 0:
+#				coordinates[0].vertices_id[j] = j + 1
+#			elif i == 11:
+#				coordinates[11].vertices_id[j] = j + 6
+#			else:
+#				if i < 6:
+#					if j == 0:
+#						coordinates[i].vertices_id[0] = 0
+#					else:
+#						coordinates[11].vertices_id[j] = 2 * j - 1
+#				else:
+#					if j == 0:
+#						coordinates[i].vertices_id[0] = 11
+#					else:
+#						coordinates[11].vertices_id[j] = j + 6
+#		var k = 0
+#		if i < 6:
+#			for j in [-i, -1, 5, 6, 1]:
+#				coordinates[i].vertices_id[k] = i + j
+#				if coordinates[i].vertices_id[k] > 10: coordinates[i].vertices_id[k] -= 5
+#				#if coordinates[i].vertices_id[k] >  5: coordinates[i].vertices_id[k] -= 5
+#				k += 1
+#
+#		else:
+#			k = 0
+#			for j in [11, -1, -6, -5, 1]:
+#				coordinates[i].vertices_id[k] = i + j
+#				k += 1
+		
+		
+
+
+func init_vertices2() -> void:
+	coordinates.resize(vertices)
+	
+	for i in vertices:
+		coordinates[i] = Vertex.new()
+		coordinates[i].subdivision = subdivision
+		coordinates[i].id = i
+		
 		for j in 5:
 			if i == 0:
 				coordinates[0].vertices_id[j] = 2 * j + 1
@@ -167,7 +268,7 @@ func init_vertices() -> void:
 					coordinates[i].faces_id[j] -= 20
 		
 		#prints(i, coordinates[i].vertices_id)
-		prints(i, coordinates[i].faces_id)
+		#prints(i, coordinates[i].faces_id)
 	return
 
 
