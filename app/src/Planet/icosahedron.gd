@@ -189,8 +189,6 @@ func init_vertices() -> void:
 	vertex_array[1].z = 0
 	
 	prints(1, vertex_array[1].x, vertex_array[1].y, vertex_array[1].z)
-		#[ 0, -1,  5,  6, 1]
-		#[11, -1, -6, -5, 1]
 #		for j in 5:
 #			if i == 0:
 #				vertex_array[0].vertices_id[j] = j + 1
@@ -207,19 +205,6 @@ func init_vertices() -> void:
 #						vertex_array[i].vertices_id[0] = 11
 #					else:
 #						vertex_array[11].vertices_id[j] = j + 6
-#		var k = 0
-#		if i < 6:
-#			for j in [-i, -1, 5, 6, 1]:
-#				vertex_array[i].vertices_id[k] = i + j
-#				if vertex_array[i].vertices_id[k] > 10: vertex_array[i].vertices_id[k] -= 5
-#				#if vertex_array[i].vertices_id[k] >  5: vertex_array[i].vertices_id[k] -= 5
-#				k += 1
-#
-#		else:
-#			k = 0
-#			for j in [11, -1, -6, -5, 1]:
-#				vertex_array[i].vertices_id[k] = i + j
-#				k += 1
 		
 		
 
