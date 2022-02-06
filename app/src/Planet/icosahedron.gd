@@ -17,7 +17,7 @@ var face_array:     Array
 var vertex_array:   Array
 
 
-class Surface:
+class SurfaceClass:
 	var subdivision:    int
 	var vertices:       int       # вершины
 	var edges:          int       # рёбра
@@ -183,6 +183,20 @@ func init_vertices() -> void:
 		
 		#prints(i, vertex_array[i].vertices_id)
 		#prints(i, vertex_array[i].latitude, vertex_array[i].longitude)
+	
+	
+	vertex_array[1].y = radius * sin(deg2rad(vertex_array[1].latitude))
+	
+	var radius_xy = radius * cos(deg2rad(vertex_array[1].longitude))
+	vertex_array[1].x = radius_xy * cos(deg2rad(90 - vertex_array[1].longitude))
+	
+	
+	var radius_xz = radius * cos(deg2rad(90 - vertex_array[1].latitude))
+	vertex_array[1].x = radius_xz * cos(deg2rad(vertex_array[1].longitude))
+	vertex_array[1].z = radius_xz * sin(deg2rad(vertex_array[1].longitude))
+	
+		
+		
 		
 	vertex_array[1].x = radius * sin(deg2rad(vertex_array[1].latitude))
 	vertex_array[1].y = radius * sin(deg2rad(90 - vertex_array[1].latitude))
