@@ -185,23 +185,31 @@ func init_vertices() -> void:
 		#prints(i, vertex_array[i].latitude, vertex_array[i].longitude)
 	
 	
-	vertex_array[1].y = radius * sin(deg2rad(vertex_array[1].latitude))
+	vertex_array[1].longitude = 30
+	
+	vertex_array[1].y = radius * cos(deg2rad(vertex_array[1].latitude))
+	prints("y:", vertex_array[1].y)
 	
 	var radius_xy = radius * cos(deg2rad(vertex_array[1].longitude))
-	vertex_array[1].x = radius_xy * cos(deg2rad(90 - vertex_array[1].longitude))
+	vertex_array[1].x = radius_xy * sin(deg2rad(vertex_array[1].latitude))
+	vertex_array[1].y = radius_xy * cos(deg2rad(vertex_array[1].latitude))
+	prints("x:", vertex_array[1].x, "y:", vertex_array[1].y)
 	
-	
-	var radius_xz = radius * cos(deg2rad(90 - vertex_array[1].latitude))
+	var radius_xz = radius * sin(deg2rad(vertex_array[1].latitude))
 	vertex_array[1].x = radius_xz * cos(deg2rad(vertex_array[1].longitude))
 	vertex_array[1].z = radius_xz * sin(deg2rad(vertex_array[1].longitude))
+	prints("x:", vertex_array[1].x, "z:", vertex_array[1].z)
 	
-		
+	var radius_yz = radius * sin(deg2rad(90 - vertex_array[1].longitude))
+	vertex_array[1].y = radius_yz * cos(deg2rad(vertex_array[1].latitude))
+	vertex_array[1].z = radius_yz * sin(deg2rad(vertex_array[1].latitude))
+	prints("y:", vertex_array[1].y, "z:", vertex_array[1].z)
 		
 		
 	vertex_array[1].x = radius * sin(deg2rad(vertex_array[1].latitude))
 	vertex_array[1].y = radius * sin(deg2rad(90 - vertex_array[1].latitude))
 	vertex_array[1].z = 0
-	
+
 	prints(1, vertex_array[1].x, vertex_array[1].y, vertex_array[1].z)
 #		for j in 5:
 #			if i == 0:
