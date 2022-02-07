@@ -33,6 +33,36 @@ const dataset = {
 			[11,  9,  4,  5,  6],
 			[ 6,  7,  8,  9, 10]
 		]
+	},
+	face = {
+		vertices = [
+			[ 1,  2,  3,  4,  5],
+			[ 0,  5,  6,  7,  2],
+			[ 0,  1,  7,  8,  3],
+			[ 0,  2,  8,  9,  4],
+			[ 0,  3,  9, 10,  5],
+			[ 0,  4, 10,  6,  1],
+			[11, 10,  5,  1,  7],
+			[11,  6,  1,  2,  8],
+			[11,  7,  2,  3,  9],
+			[11,  8,  3,  4, 10],
+			[11,  9,  4,  5,  6],
+			[ 6,  7,  8,  9, 10]
+		],
+		faces = [
+			[ 1,  2,  3,  4,  5],
+			[ 0,  5,  6,  7,  2],
+			[ 0,  1,  7,  8,  3],
+			[ 0,  2,  8,  9,  4],
+			[ 0,  3,  9, 10,  5],
+			[ 0,  4, 10,  6,  1],
+			[11, 10,  5,  1,  7],
+			[11,  6,  1,  2,  8],
+			[11,  7,  2,  3,  9],
+			[11,  8,  3,  4, 10],
+			[11,  9,  4,  5,  6],
+			[ 6,  7,  8,  9, 10]
+		]
 	}
 }
 
@@ -59,7 +89,7 @@ class SurfaceClass:
 	var latitudes:      int       # широты
 	var edge_length:    float     # длина ребра
 	var parallel_angle: float
-	var vertex_array:   Array
+	#var vertex_array:   Array
 	
 	func _init(subdiv = 1, radius = 1):
 		var n = int(pow(4, subdiv - 1))
@@ -71,6 +101,9 @@ class SurfaceClass:
 		edge_length = radius * 4 / sqrt(2 * (5 + sqrt(5)))
 		parallel_angle = 180 / float(latitudes)
 		
+		#n = vertices - 1
+		#vertex_array.resize(vertices)
+		
 		print("x", subdivision)
 		print("%d vertices" % vertices)
 		print("%d edges" % edges)
@@ -78,9 +111,6 @@ class SurfaceClass:
 		print("%d latitudes" % latitudes)
 		print("edge length: ", edge_length)
 		print("latitude angle: ", parallel_angle)
-		
-		n = vertices - 1
-		vertex_array.resize(vertices)
 
 
 class FaceClass:
@@ -112,6 +142,9 @@ func _init():
 
 
 func _ready():
+	
+	calc_coords_vertices()
+	
 #	vertices    = get_num_vertices(subdivision)
 #	edges       = get_num_edges(subdivision)
 #	faces       = get_num_faces(subdivision)
@@ -184,27 +217,19 @@ func init_vertices() -> void:
 		vertex_array[i].latitude  = deg2rad(vertex_array[i].latitude)
 		vertex_array[i].longitude = deg2rad(vertex_array[i].longitude)
 		
+		#prints(i, vertex_array[i].vertices_id)
+		#prints(i, vertex_array[i].latitude, vertex_array[i].longitude)
+	return
+
+
+func calc_coords_vertices() -> void:
+	for i in vertices:
 		var radius_xz     = radius    * sin(vertex_array[i].latitude)
 		vertex_array[i].y = radius    * cos(vertex_array[i].latitude)
 		vertex_array[i].x = radius_xz * cos(vertex_array[i].longitude)
 		vertex_array[i].z = radius_xz * sin(vertex_array[i].longitude)
 		
 		#prints(i, vertex_array[i].x, vertex_array[i].y, vertex_array[i].z)
-		#prints(i, vertex_array[i].latitude, vertex_array[i].longitude)
-		#prints(i, vertex_array[i].vertices_id)
-		#prints(i, vertex_array[i].latitude, vertex_array[i].longitude)
-	
-#	vertex_array[1].latitude  = 90
-#	vertex_array[1].longitude = 95
-#
-#	vertex_array[1].y = radius * cos(deg2rad(vertex_array[1].latitude))
-#	prints("y:", vertex_array[1].y)
-#
-#	var radius_xz = radius * sin(deg2rad(vertex_array[1].latitude))
-#	vertex_array[1].x = radius_xz * cos(deg2rad(vertex_array[1].longitude))
-#	vertex_array[1].z = radius_xz * sin(deg2rad(vertex_array[1].longitude))
-#	prints("x:", vertex_array[1].x, "z:", vertex_array[1].z)
-	
 	return
 
 

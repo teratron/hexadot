@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/World/label.gd" type="Script" id=1]
+
+[node name="LabelPosition" type="Position3D"]
+script = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -80.0
+margin_top = -40.0
+margin_right = 80.0
+margin_bottom = -20.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.5 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 1
+text = "id"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

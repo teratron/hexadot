@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
+[ext_resource path="res://src/World/camera.gd" type="Script" id=1]
 [ext_resource path="res://src/World/world.gd" type="Script" id=2]
 [ext_resource path="res://src/Planet/icosahedron.gd" type="Script" id=3]
 
@@ -11,6 +12,32 @@ __meta__ = {
 
 [node name="Icosahedron" type="Node" parent="."]
 script = ExtResource( 3 )
+radius = 3.0
+
+[node name="Label" type="Label" parent="."]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 274.0
+margin_bottom = 24.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.501961 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 1
+text = "Press Esc or F10 to toggle mouse capture"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.642788, -0.383022, 0.663414, 0, 0.866025, 0.5, -0.766044, 0.321394, -0.556671, 0, 6, -9 )
+light_energy = 0.9
+shadow_enabled = true
+shadow_bias = 0.06
+directional_shadow_blend_splits = true
+directional_shadow_normal_bias = 0.0
+directional_shadow_bias_split_scale = 0.7
+directional_shadow_max_distance = 60.0
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 4, 10 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 8 )
+fov = 75.0
+script = ExtResource( 1 )
