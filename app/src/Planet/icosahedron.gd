@@ -3,6 +3,39 @@ class_name Icosahedron, "res://assets/tool/icosahedron.svg" extends Node
 
 const PENTAGON_ANGLE = 72
 
+const dataset = {
+	vertex = {
+		vertices = [
+			[ 1,  2,  3,  4,  5],
+			[ 0,  5,  6,  7,  2],
+			[ 0,  1,  7,  8,  3],
+			[ 0,  2,  8,  9,  4],
+			[ 0,  3,  9, 10,  5],
+			[ 0,  4, 10,  6,  1],
+			[11, 10,  5,  1,  7],
+			[11,  6,  1,  2,  8],
+			[11,  7,  2,  3,  9],
+			[11,  8,  3,  4, 10],
+			[11,  9,  4,  5,  6],
+			[ 6,  7,  8,  9, 10]
+		],
+		faces = [
+			[ 1,  2,  3,  4,  5],
+			[ 0,  5,  6,  7,  2],
+			[ 0,  1,  7,  8,  3],
+			[ 0,  2,  8,  9,  4],
+			[ 0,  3,  9, 10,  5],
+			[ 0,  4, 10,  6,  1],
+			[11, 10,  5,  1,  7],
+			[11,  6,  1,  2,  8],
+			[11,  7,  2,  3,  9],
+			[11,  8,  3,  4, 10],
+			[11,  9,  4,  5,  6],
+			[ 6,  7,  8,  9, 10]
+		]
+	}
+}
+
 export(int, 1, 10) var subdivision = 1 # кратность увеличения фрагментации икосаэдра
 export(float) var radius = 1           # радиус внешней, описывающей сферы
 
@@ -13,8 +46,9 @@ var latitudes:      int   = 3      # широты
 var parallel_angle: float = 60     # угол широты или угол треугольника
 var radius_inner:   float          # радиус внутренней, вписанной сферы
 var edge_length:    float          # длина ребра
-var face_array:     Array
+
 var vertex_array:   Array
+var face_array:     Array
 
 
 class SurfaceClass:
@@ -61,7 +95,6 @@ class VertexClass:
 	var id:          int
 	var vertices_id: Array = [null, null, null, null, null]
 	var faces_id:    Array = [null, null, null, null, null]
-	
 	var latitude:    float
 	var longitude:   float
 	var x:           float
@@ -69,44 +102,12 @@ class VertexClass:
 	var z:           float
 
 
-const icosahedron = {
-	vertex_vertices = [
-		[ 1,  2,  3,  4,  5],
-		[ 0,  5,  6,  7,  2],
-		[ 0,  1,  7,  8,  3],
-		[ 0,  2,  8,  9,  4],
-		[ 0,  3,  9, 10,  5],
-		[ 0,  4, 10,  6,  1],
-		[11, 10,  5,  1,  7],
-		[11,  6,  1,  2,  8],
-		[11,  7,  2,  3,  9],
-		[11,  8,  3,  4, 10],
-		[11,  9,  4,  5,  6],
-		[ 6,  7,  8,  9, 10]
-	],
-	vertex_faces = [
-		[ 1,  2,  3,  4,  5],
-		[ 0,  5,  6,  7,  2],
-		[ 0,  1,  7,  8,  3],
-		[ 0,  2,  8,  9,  4],
-		[ 0,  3,  9, 10,  5],
-		[ 0,  4, 10,  6,  1],
-		[11, 10,  5,  1,  7],
-		[11,  6,  1,  2,  8],
-		[11,  7,  2,  3,  9],
-		[11,  8,  3,  4, 10],
-		[11,  9,  4,  5,  6],
-		[ 6,  7,  8,  9, 10]
-	]
-}
-
-
 func _init():
 	edge_length  = radius * 4 / sqrt(2 * (5 + sqrt(5)))
 	radius_inner = edge_length / (4 * sqrt(3)) * (3 + sqrt(5))
 	
 	init_vertices()
-	init_surface()
+	init_faces()
 	pass
 
 
@@ -120,10 +121,10 @@ func _ready():
 #	parallel_angle = 180 / float(latitudes)
 	
 	
-#	icosahedron.resize(subdivision)
+#	dataset.resize(subdivision)
 #	for i in range(0, subdivision):
 #		#print(i)
-#		icosahedron[i] = Figure.new(i + 1, radius)
+#		dataset[i] = Figure.new(i + 1, radius)
 
 
 #	var n = vertices - 1
@@ -163,7 +164,7 @@ func init_vertices() -> void:
 		vertex_array[i].subdivision = subdivision
 		vertex_array[i].id = i
 		
-		vertex_array[i].vertices_id = icosahedron.vertex_vertices[i]
+		vertex_array[i].vertices_id = dataset.vertex.vertices[i]
 		
 		if i == 0:
 			vertex_array[i].latitude  = 0
@@ -178,104 +179,36 @@ func init_vertices() -> void:
 				vertex_array[i].latitude  *= 2
 				vertex_array[i].longitude -= PENTAGON_ANGLE * .5
 			
-			if vertex_array[i].longitude > 360:
-				vertex_array[i].longitude -= 360
+			if vertex_array[i].longitude > 360: vertex_array[i].longitude -= 360
 		
+		vertex_array[i].latitude  = deg2rad(vertex_array[i].latitude)
+		vertex_array[i].longitude = deg2rad(vertex_array[i].longitude)
+		
+		var radius_xz     = radius    * sin(vertex_array[i].latitude)
+		vertex_array[i].y = radius    * cos(vertex_array[i].latitude)
+		vertex_array[i].x = radius_xz * cos(vertex_array[i].longitude)
+		vertex_array[i].z = radius_xz * sin(vertex_array[i].longitude)
+		
+		#prints(i, vertex_array[i].x, vertex_array[i].y, vertex_array[i].z)
+		#prints(i, vertex_array[i].latitude, vertex_array[i].longitude)
 		#prints(i, vertex_array[i].vertices_id)
 		#prints(i, vertex_array[i].latitude, vertex_array[i].longitude)
 	
+#	vertex_array[1].latitude  = 90
+#	vertex_array[1].longitude = 95
+#
+#	vertex_array[1].y = radius * cos(deg2rad(vertex_array[1].latitude))
+#	prints("y:", vertex_array[1].y)
+#
+#	var radius_xz = radius * sin(deg2rad(vertex_array[1].latitude))
+#	vertex_array[1].x = radius_xz * cos(deg2rad(vertex_array[1].longitude))
+#	vertex_array[1].z = radius_xz * sin(deg2rad(vertex_array[1].longitude))
+#	prints("x:", vertex_array[1].x, "z:", vertex_array[1].z)
 	
-	vertex_array[1].longitude = 30
-	
-	vertex_array[1].y = radius * cos(deg2rad(vertex_array[1].latitude))
-	prints("y:", vertex_array[1].y)
-	
-	var radius_xy = radius * cos(deg2rad(vertex_array[1].longitude))
-	vertex_array[1].x = radius_xy * sin(deg2rad(vertex_array[1].latitude))
-	vertex_array[1].y = radius_xy * cos(deg2rad(vertex_array[1].latitude))
-	prints("x:", vertex_array[1].x, "y:", vertex_array[1].y)
-	
-	var radius_xz = radius * sin(deg2rad(vertex_array[1].latitude))
-	vertex_array[1].x = radius_xz * cos(deg2rad(vertex_array[1].longitude))
-	vertex_array[1].z = radius_xz * sin(deg2rad(vertex_array[1].longitude))
-	prints("x:", vertex_array[1].x, "z:", vertex_array[1].z)
-	
-	var radius_yz = radius * sin(deg2rad(90 - vertex_array[1].longitude))
-	vertex_array[1].y = radius_yz * cos(deg2rad(vertex_array[1].latitude))
-	vertex_array[1].z = radius_yz * sin(deg2rad(vertex_array[1].latitude))
-	prints("y:", vertex_array[1].y, "z:", vertex_array[1].z)
-		
-		
-	vertex_array[1].x = radius * sin(deg2rad(vertex_array[1].latitude))
-	vertex_array[1].y = radius * sin(deg2rad(90 - vertex_array[1].latitude))
-	vertex_array[1].z = 0
-
-	prints(1, vertex_array[1].x, vertex_array[1].y, vertex_array[1].z)
-#		for j in 5:
-#			if i == 0:
-#				vertex_array[0].vertices_id[j] = j + 1
-#			elif i == 11:
-#				vertex_array[11].vertices_id[j] = j + 6
-#			else:
-#				if i < 6:
-#					if j == 0:
-#						vertex_array[i].vertices_id[0] = 0
-#					else:
-#						vertex_array[11].vertices_id[j] = 2 * j - 1
-#				else:
-#					if j == 0:
-#						vertex_array[i].vertices_id[0] = 11
-#					else:
-#						vertex_array[11].vertices_id[j] = j + 6
-		
-		
-
-
-func init_vertices2() -> void:
-	vertex_array.resize(vertices)
-	
-	for i in vertices:
-		vertex_array[i] = VertexClass.new()
-		vertex_array[i].subdivision = subdivision
-		vertex_array[i].id = i
-		
-		for j in 5:
-			if i == 0:
-				vertex_array[0].vertices_id[j] = 2 * j + 1
-				vertex_array[0].faces_id[j]    = 4 * j
-			elif i == 11:
-				vertex_array[11].vertices_id[j] = 2 * j + 2
-				vertex_array[11].faces_id[j]    = 4 * j + 3
-			else:
-				if j == 0:
-					if i%2 > 0: # нечётное
-						vertex_array[i].vertices_id[0] = 0
-					else: # чётное
-						vertex_array[i].vertices_id[0] = 11
-				else:
-					if j < 3:
-						vertex_array[i].vertices_id[j] = i + j - 3
-						if vertex_array[i].vertices_id[j] < 1:
-							vertex_array[i].vertices_id[j] += 10
-					else:
-						vertex_array[i].vertices_id[j] = i + j - 2
-						if vertex_array[i].vertices_id[j] > 10:
-							vertex_array[i].vertices_id[j] -= 10
-				
-				if (i%2 > 0 && j < 3) || (i%2 == 0 && j < 2):
-					vertex_array[i].faces_id[j] = 2 * i + j - 2
-				else:
-					vertex_array[i].faces_id[j] = 2 * i + j - 1
-				
-				if vertex_array[i].faces_id[j] > 19:
-					vertex_array[i].faces_id[j] -= 20
-		
-		#prints(i, vertex_array[i].vertices_id)
-		#prints(i, vertex_array[i].faces_id)
 	return
 
 
-func init_surface() -> void:
+func init_faces() -> void:
 	face_array.resize(faces)
 	var i = 0
 	var a: int

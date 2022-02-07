@@ -1,9 +1,13 @@
 extends Spatial
 
+onready var icosahedron = $Icosahedron
 
 func _ready():
 	var m = add_mesh_instance(self, "Center")
 	add_property_to_mesh_instance(m)
+	
+	prints(icosahedron.vertex_array[0].x, icosahedron.vertex_array[0].y, icosahedron.vertex_array[0].z)
+	#prints(icosahedron.vertex_array[0]._xyz)
 	pass
 
 
