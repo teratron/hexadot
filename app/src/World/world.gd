@@ -1,8 +1,7 @@
 extends Spatial
 
 onready var icosahedron = $Icosahedron
-onready var label = preload("res://src/World/label.tscn")
-#var LabelPosition = label.new()
+onready var label = load("res://src/World/label.tscn")
 
 
 func _ready():
@@ -28,8 +27,9 @@ func _ready():
 		m.translation.x = v.x
 		m.translation.y = v.y
 		m.translation.z = v.z
-		m.add_child($label, true)
-		#print(v.y)
+		
+		m.add_child(label.instance(), true)
+		
 	
 	#prints(icosahedron.vertex_array[0].x, icosahedron.vertex_array[0].y, icosahedron.vertex_array[0].z)
 	#prints(icosahedron.vertex_array[0]._xyz)

@@ -4,7 +4,8 @@ extends Camera
 const MOUSE_SENSITIVITY = 0.002
 const MOVE_SPEED = 0.6
 
-var action         = load("res://src/World/action.gd").new()
+var a        = load("res://src/World/action.gd")
+var action         = a.new()
 #var move_forward  = action.new("move_forward",  [KEY_W, KEY_UP])
 #var move_backword = action.new("move_backword", [KEY_S, KEY_DOWN])
 #var move_left     = action.new("move_left",     [KEY_A, KEY_LEFT])

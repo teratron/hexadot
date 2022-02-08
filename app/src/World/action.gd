@@ -1,4 +1,4 @@
-class_name ActionClass #extends InputMap
+class_name ActionMapClass #extends InputMap
 
 
 #var _action: String
@@ -6,14 +6,16 @@ class_name ActionClass #extends InputMap
 #var _input_event_key = [null, null]
 #var _input_event_action = [null, null]
 
-
 #var _input_event = {
 #	"key":    InputEventKey,
 #	"action": InputEventAction
 #}
 
 
-#func _init(action: String, code=[]):
+#func _init(action=null, deadzone=0.5, code=[]).(action, deadzone):
+#func _init():
+	#._init()
+	#pass
 #	_action = action
 #	_code = code
 #	var input_event_key    = [null, null]
@@ -32,20 +34,21 @@ class_name ActionClass #extends InputMap
 #		InputMap.action_add_event(action, input_event_key[i])
 
 
-func add_action(action: String, key=[]) -> void:
+func add_action(action: String, code=[]) -> void:
+	#.add_action(action)
 	var input_event_key    = [null, null]
 	var input_event_action = [null, null]
 	
 	if !InputMap.has_action(action):
 		InputMap.add_action(action)
 	
-	for i in len(key):
+	for i in len(code):
 		#InputEventJoypadButton
 		input_event_action[i] = InputEventAction.new()
 		input_event_action[i].action = action
 		
 		input_event_key[i] = InputEventKey.new()
-		input_event_key[i].scancode = key[i]
+		input_event_key[i].scancode = code[i]
 		
 		InputMap.action_add_event(action, input_event_key[i])
 	
