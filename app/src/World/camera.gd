@@ -4,8 +4,7 @@ extends Camera
 const MOUSE_SENSITIVITY = 0.002
 const MOVE_SPEED = 0.6
 
-var a        = load("res://src/World/action.gd")
-var action         = a.new()
+var action        = preload("res://src/World/action.gd").new()
 #var move_forward  = action.new("move_forward",  [KEY_W, KEY_UP])
 #var move_backword = action.new("move_backword", [KEY_S, KEY_DOWN])
 #var move_left     = action.new("move_left",     [KEY_A, KEY_LEFT])
@@ -14,11 +13,15 @@ var move_forward  = action.add_action("move_forward",  [KEY_W, KEY_UP])
 var move_backword = action.add_action("move_backword", [KEY_S, KEY_DOWN])
 var move_left     = action.add_action("move_left",     [KEY_A, KEY_LEFT])
 var move_right    = action.add_action("move_right",    [KEY_D, KEY_RIGHT])
+var move_up       = action.add_action("move_up",       [KEY_SPACE])
+var move_down     = action.add_action("move_down",     [KEY_SHIFT])
+
 var rotate         = Vector3()
 var velocity       = Vector3() 
 
 
 func _ready():
+	print(action)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
@@ -41,7 +44,7 @@ func _input(event):
 func _process(delta):
 	var motion = Vector3(
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
-		0,
+		Input.get_action_strength("move_up") - Input.get_action_strength("move_down"),
 		Input.get_action_strength("move_backword") - Input.get_action_strength("move_forward")
 	)
 
