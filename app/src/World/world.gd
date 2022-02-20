@@ -7,7 +7,7 @@ onready var vertex = preload("res://src/World/vertex_ball.tscn")
 
 func _ready():
 	for v in icosahedron.vertex_array:
-		var ball = vertex.instance(1)
+		var ball = vertex.instance(PackedScene.GEN_EDIT_STATE_INSTANCE)
 		ball.translation.x = v.x
 		ball.translation.y = v.y
 		ball.translation.z = v.z
