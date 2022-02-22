@@ -2,7 +2,7 @@ extends Spatial
 
 
 onready var icosahedron = $Icosahedron
-onready var vertex = preload("res://src/World/vertex_ball.tscn")
+onready var vertex = preload("res://src/world/vertex_ball.tscn")
 
 
 func _ready():

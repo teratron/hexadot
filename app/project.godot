@@ -12,28 +12,28 @@ _global_script_classes=[ {
 "base": "Reference",
 "class": "ActionMapClass",
 "language": "GDScript",
-"path": "res://src/World/action.gd"
+"path": "res://src/world/action.gd"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "Icosahedron",
 "language": "GDScript",
-"path": "res://src/Planet/icosahedron.gd"
+"path": "res://src/geometry/icosahedron.gd"
 }, {
-"base": "Node",
+"base": "Reference",
 "class": "Planet",
 "language": "GDScript",
-"path": "res://src/Planet/planet.gd"
+"path": "res://src/planet/planet.gd"
 } ]
 _global_script_class_icons={
 "ActionMapClass": "",
-"Icosahedron": "res://assets/tool/icosahedron.svg",
-"Planet": "res://assets/tool/earth.svg"
+"Icosahedron": "",
+"Planet": ""
 }
 
 [application]
 
 config/name="Hexadot"
-run/main_scene="res://src/World/world.tscn"
+run/main_scene="res://src/world/world.tscn"
 config/icon="res://assets/icon.png"
 
 [input]
